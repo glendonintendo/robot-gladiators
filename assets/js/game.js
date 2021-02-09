@@ -81,9 +81,16 @@ var startGame = function() {
 
 var endGame = function() {
     if (playerInfo.health > 0) {
-        window.alert(`Great job, you've survived the game! You now have a score of ${playerInfo.money}.`)
-    } else {
-        window.alert("You've lost your robot in battle.");
+        window.alert(`Great job, you've survived the game! You earned a score of ${playerInfo.money}.`)
+        var highScore = localStorage.getItem("highScore") || 0;
+
+        if (playerInfo.money > highScore) {
+            localStorage.setItem("highScore", playerInfo.money);
+            localStorage.setItem("name", playerInfo.name);
+            window.alert(`${playerInfo.name} now has the highScore of ${playerInfo.money}!`);
+        } else {
+            window.alert(`${playerInfo.name} did not surpass the high score of ${highScore}, previously set by ${localStorage.getItem("name")}. Better luck next time!`);
+        }
     }
 
     var playAgainConfirm = window.confirm("Would you like to play again?");
